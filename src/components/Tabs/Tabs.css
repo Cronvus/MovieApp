@@ -1,0 +1,28 @@
+.tabs {
+    display: flex;
+    margin: 0 auto 10px auto;
+    justify-content: center;
+    border-bottom: 1px solid rgba(217, 217, 217, 1);
+    width: 146px;
+    height: 54.5px;
+
+}
+
+.tabs button {
+    width: 72px;
+    height: 54px;
+    border: none;
+    cursor: pointer;
+    background-color: white;
+    font-size: 14px;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.65);
+    text-align: center;
+}
+
+
+
+.tabs button.active {
+    color: rgba(24, 144, 255, 1);
+    border-bottom: 2px solid rgba(24, 144, 255, 1);
+}

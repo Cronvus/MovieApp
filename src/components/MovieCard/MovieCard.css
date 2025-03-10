@@ -1,0 +1,110 @@
+*{
+    box-sizing: border-box;
+}
+.ant-card{
+    border-radius: 0;
+    border: none;
+    width: 451px;
+    height: 279px;
+}
+.ant-card .ant-card-body{
+    padding: 0;
+    display: flex;
+    width: 451px;
+    height: 279px;
+    font-family: 'Inter UI', sans-serif;
+    overflow: hidden;
+    border-radius: 0;
+    box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.15)
+}
+.ant-card .ant-card-body p{
+    font-size: 12px;
+    margin-bottom: 7px;
+    margin-top: 0;
+}
+
+.ant-card .ant-card-body h2{
+    width: 200px;
+    font-size: 20px;
+    margin-bottom: 7px;
+    margin-top: 0;
+}
+
+.ant-card .rating {
+    position: absolute;
+    right: 0;
+    margin-right: 9px;
+    width: 30px;
+    height: 30px;
+    padding-top: 5px;
+    text-align: center;
+    border: 2px solid transparent;
+    border-radius: 50%;
+}
+.ant-card .rating.rating-lowed{
+    border-color: #E90000;
+}
+.ant-card .rating.rating-low{
+    border-color: #E97E00;
+}
+.ant-card .rating.rating-medium{
+    border-color: #E9D100;
+}
+.ant-card .rating.rating-high{
+    border-color: #66E900;
+}
+
+.ant-card img{
+    width: 183px;
+    height: 281px ;
+    margin-right: 20px;
+}
+.info-card{
+    width: 239px;
+    padding-top: 10px;
+    margin-left: auto;
+    margin-right: 10px;
+}
+.date-card{
+    color: #827E7E
+}
+.ant-rate{
+    position: absolute;
+    bottom: 20px;
+    font-size: 16px;
+}
+.card-rate .ant-card{
+    margin: 20px;
+}
+.genre-card .ant-tag.genre-name{
+    margin-top: 4px;
+}
+@media (min-width: 300px) and (max-width: 540px){
+    .ant-card .ant-card-body{
+        width: 365px;
+        height: 245px;
+    }
+    .ant-card img{
+        width: 60px;
+        height: 91px;
+    }
+    .info-card{
+        margin-left: 0;
+        width: 100%
+    }
+    .ant-card .rating {
+        right: 80px;
+    }
+    .ant-card .ant-card-body h2{
+        width: 265px;
+    }
+    .ant-rate{
+        bottom: 45px;
+        right: 100px;
+    }
+    .ant-card .ant-card-body .overview{
+        width: 355px;
+        position: absolute;
+        left: 10px
+    }
+}

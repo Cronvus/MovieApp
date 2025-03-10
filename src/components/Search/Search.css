@@ -1,0 +1,22 @@
+.form-search{
+    margin: 18px auto 20px auto;
+    width: 960px;
+}
+.input-search{
+    width: 924px;
+    height: 40px;
+    border-radius: 5px;
+    border-color: #baacac30;
+}
+
+@media (min-width: 300px) and (max-width: 1009px){
+    .form-search {
+    width: 100%;
+    }
+
+    .input-search{
+        min-width: 388px;
+        max-width: 100%;
+        margin: -20px 16px 0 10px;
+    }
+}
