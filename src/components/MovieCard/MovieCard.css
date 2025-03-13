@@ -28,6 +28,8 @@
     font-size: 20px;
     margin-bottom: 7px;
     margin-top: 0;
+    max-height: 70px;
+    overflow: hidden;
 }
 
 .ant-card .rating {
@@ -97,6 +99,7 @@
     }
     .ant-card .ant-card-body h2{
         width: 265px;
+
     }
     .ant-rate{
         bottom: 45px;

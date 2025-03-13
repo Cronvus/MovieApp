@@ -27,20 +27,33 @@ const MovieCard: React.FC<Movie> = ({ id, genre_ids, poster_path, title, release
   }
 
   const getRatingCard = (): string => {
-    return vote_average < 3 ? 'rating rating-lowed' : vote_average >= 3 && vote_average < 5 ? 'rating rating-low' : vote_average >= 5 && vote_average < 7 ? 'rating rating-medium' : 'rating rating-high'
+    let ratingClass = 'rating'
+
+    if (vote_average < 3) {
+      ratingClass += ' rating-lowed'
+    } else if (vote_average < 5) {
+      ratingClass += ' rating-low'
+    } else if (vote_average < 7) {
+      ratingClass += ' rating-medium'
+    } else {
+      ratingClass += ' rating-high'
+    }
+
+    return ratingClass
   }
 
   useEffect(() =>{
-    const saveRating = localStorage.getItem(`guest_${guestSessionId}_movie_${id}_rating`)
+    const saveRating = JSON.parse(localStorage.getItem(`guest_${guestSessionId}_movie_${id}_rating`) || '{}')
     if (saveRating) {
-      setRating(Number(saveRating))
+      setRating(Number(saveRating.rating))
     }
   }, [id, guestSessionId])
 
 
   useEffect(() => {
     if (rating > 0) {
-      localStorage.setItem(`guest_${guestSessionId}_movie_${id}_rating`, rating.toString())
+      const ratingObject = { rating : rating }
+      localStorage.setItem(`guest_${guestSessionId}_movie_${id}_rating`, JSON.stringify(ratingObject))
       if (guestSessionId) {
         rateMovie()
       }
@@ -77,11 +90,11 @@ const MovieCard: React.FC<Movie> = ({ id, genre_ids, poster_path, title, release
         />
       ) : <LoadingSpin />}
       <div className='info-card'>
-        <p className={getRatingCard()}>{vote_average.toFixed(1)}</p>
+        <div className={getRatingCard()}>{vote_average.toFixed(1)}</div>
         <h2>{title}</h2>
         <p className='date-card'>{release_date ? format(release_date, 'LLLL dd, yyyy', { locale: ru }) : ''}</p>
-        <p className='genre-card'>{getGenreNames()}</p>
-        <p className='overview'>{shortText(overview, 160)}</p>
+        <div className='genre-card'>{getGenreNames()}</div>
+        <p className='overview'>{shortText(overview, 150)}</p>
         <Rate allowHalf value={rating} onChange={handelRate} defaultValue={0} count={10}/>
       </div>
     </Card>

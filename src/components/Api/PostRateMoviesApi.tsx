@@ -1,9 +1,15 @@
+const sentMovieId: number[] = []
+
 const PostRateMoviesApi = (movieId: number, rating: number, guestSessionId: string | null) => {
   const rateMovie = () => {
     if (!guestSessionId) {
       console.error('No guest session id')
       return
     }
+    if (sentMovieId.includes( movieId )) {
+      return
+    }
+
     const options = {
       method: 'POST',
       headers: {
@@ -16,7 +22,10 @@ const PostRateMoviesApi = (movieId: number, rating: number, guestSessionId: stri
 
     fetch(`https://api.themoviedb.org/3/movie/${movieId}/rating?guest_session_id=${guestSessionId}`, options)
       .then(res => res.json())
-      .then(res => console.log(res, guestSessionId, movieId))
+      .then(res => {
+        console.log(res)
+        sentMovieId.push(movieId)
+      })
       .catch(err => console.error(err))
   }
   return { rateMovie }

@@ -3,11 +3,12 @@ import GuestSessionApi from './GuestSessionApi'
 import { Movie } from '../Interface/Interface'
 
 
-export const SearchApi = ({ searchText }: { searchText: string }) => {
+export const SearchApi = ({ searchText, currentPage }: { searchText: string, currentPage: number }) => {
   const { guestSessionId } = GuestSessionApi()
   const [movies, setMovies] = useState<Movie[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [totalMovies, setTotalMovies] = useState<number>(0)
 
   useEffect(() => {
     const fetchMovies = async () =>{
@@ -27,13 +28,13 @@ export const SearchApi = ({ searchText }: { searchText: string }) => {
       }
 
       try {
-        const response = await fetch(`https://api.themoviedb.org/3/search/movie?query=${encodeURIComponent(searchText)}&include_adult=false&language=en-US&page=1`, options)
+        const response = await fetch(`https://api.themoviedb.org/3/search/movie?query=${encodeURIComponent(searchText)}&include_adult=false&language=en-US&page=${currentPage}`, options)
         if (!response.ok) {
           throw new Error('Network response was not ok')
         }
         const data = await response.json()
-
         setMovies(data.results)
+        setTotalMovies(data.total_results)
       } catch (e) {
         setError(e instanceof Error ? e.message : 'Unknown error')
       } finally {
@@ -44,7 +45,7 @@ export const SearchApi = ({ searchText }: { searchText: string }) => {
     if (guestSessionId) {
       fetchMovies()
     }
-  }, [searchText, guestSessionId])
+  }, [searchText, currentPage, guestSessionId])
 
-  return { movies, loading, error }
+  return { movies, loading, error, totalMovies }
 }

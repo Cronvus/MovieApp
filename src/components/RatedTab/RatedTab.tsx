@@ -1,19 +1,22 @@
 import React, { useState } from 'react'
-import { Movie } from '../Interface/Interface'
 import  MovieCard  from '../MovieCard/MovieCard'
 import { LoadingSpin } from '../LoadingSpin'
-import { Row } from 'antd'
+import { Row, Pagination } from 'antd'
 import './RatedTab.css'
-import GetRatedMoviesApi from '../Api/GetRatedMoviesApi'
+import useGetRatedMoviesApi from '../Api/useGetRatedMoviesApi'
 import GuestSessionApi from '../Api/GuestSessionApi'
 
-
+const PageSize = 20
 
 export const RatedTab: React.FC = () =>{
-  const [ratedMovies, setRatedMovies] = useState<Movie[]>([])
+  const [currentPage, setCurrentPage] = useState<number>(1)
   const { guestSessionId } = GuestSessionApi()
-  const { loading } = GetRatedMoviesApi(guestSessionId, setRatedMovies)
+  const { ratedMovies, loading, totalItems } = useGetRatedMoviesApi(guestSessionId, currentPage)
 
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page)
+  }
 
   if (loading) {
     return <LoadingSpin />
@@ -22,8 +25,32 @@ export const RatedTab: React.FC = () =>{
   return (
     <Row className='card-list rate-list'>
       {ratedMovies.map(movie => (
-        <MovieCard key={movie.id} {...movie} />
+        <div className='card-box' key={movie.id}>
+          <MovieCard {...movie} />
+        </div>
       ))}
+      {totalItems > 0 && (
+        <Pagination
+          className='pagination'
+          align="center"
+          current={currentPage}
+          pageSize={PageSize}
+          total={totalItems}
+          onChange={handlePageChange}
+          hideOnSinglePage
+          showSizeChanger={false}
+          pageSizeOptions={[]}
+          itemRender={(page, type, originalElement) => {
+            if (type === 'prev') {
+              return <a>&lt;</a>
+            }
+            if (type === 'next') {
+              return <a>&gt;</a>
+            }
+            return originalElement
+          }}
+        />
+      )}
     </Row>
   )
 }

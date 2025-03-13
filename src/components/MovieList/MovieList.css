@@ -10,7 +10,8 @@
 }
 
 .pagination{
-    margin: 0 24.4rem;
+    margin: 0 auto;
+    width: 100%;
 }
 @media (min-width: 300px) and (max-width: 1009px){
     .card-list{

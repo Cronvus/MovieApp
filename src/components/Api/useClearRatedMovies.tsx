@@ -1,15 +1,14 @@
 import { useEffect } from 'react'
-import { Movie } from '../Interface/Interface'
-import GetRatedMoviesApi from './GetRatedMoviesApi'
+import useGetRatedMoviesApi from './useGetRatedMoviesApi'
 
 const useClearRatedMovies = (guestSessionId: string | null) => {
+  const { ratedMovies, loading } = useGetRatedMoviesApi(guestSessionId, 1)
+
   useEffect(() => {
     const clearRatedMovies = async () => {
-      if (!guestSessionId) return
+      if (!guestSessionId || loading) return
 
-      const ratedMovies: Movie[] = await new Promise((resolve) => {
-        GetRatedMoviesApi(guestSessionId, resolve)
-      })
+
 
       const movieIdsToClear: number[] = ratedMovies.map(movie => movie.id)
 
@@ -39,7 +38,7 @@ const useClearRatedMovies = (guestSessionId: string | null) => {
     }
 
     clearRatedMovies()
-  }, [guestSessionId])
+  }, [guestSessionId, loading, ratedMovies])
 }
 
 export default useClearRatedMovies
